@@ -8,13 +8,12 @@ const ToDoListForm = (props) => {
         display: "flex",
         alignItems: "center",
     };
-    let myList = [
+    const [getList, setList] = useState([
         { name: "eat", status: false },
         { name: "sleep", status: false },
         { name: "pay taxes", status: false },
         { name: "die", status: false },
-    ];
-    const [getList, setList] = useState(myList);
+    ]);
     const [newTask, setNewTask] = useState("");
     const setUserInput = (e) => {
         e.preventDefault();
@@ -23,48 +22,49 @@ const ToDoListForm = (props) => {
     const addToList = (e) => {
         e.preventDefault();
         let newObject = { name: newTask, status: false };
-        myList.push(newObject);
-        setList(myList);
+        getList.push(newObject);
+        setList(getList);
         setNewTask("");
     };
     const deleteThis = (index) => {
-        var newList = myList.filter((value, i) => i !== index);
-        myList = newList;
-        setList(myList);
+        var newList = getList.filter((value, i) => i !== index);
+        setList(newList);
     };
 
     const checkedBox = (task) => {
-        let tempList = myList;
-        console.log("ORIG", task.task);
-        tempList.map((eachTask) => {
+        getList.map((eachTask) => {
             if (eachTask["name"] == task.task["name"]) {
                 console.log("MATCH", eachTask);
-                eachTask.status == true
-                    ? (eachTask.status = false)
-                    : (eachTask.status = true);
-                console.log("AFTER", eachTask);
+                if (eachTask.status == true) {
+                    return (eachTask.status = false);
+                } else {
+                    return (eachTask.status = true);
+                }
             }
         });
-        console.log(tempList);
-        myList = tempList;
-        return setList(myList);
+        console.log(getList);
+        setList(getList);
+        refreshList();
+    };
+    const refreshList = () => {
+        var tempList = getList;
+        return setList(tempList);
     };
     return (
         <div>
-            <ul style={noBullet}>
+            <ul style={noBullet} onChange={refreshList}>
                 {getList.map((task, index) => (
                     <li key={index}>
                         <div style={inlineItems}>
                             <input
-                                id={index}
                                 type="checkbox"
-                                onClick={() => checkedBox({ task })}
+                                onChange={() => checkedBox({ task })}
                                 defaultChecked={task["status"]}
                             />
                             <p
                                 style={{
                                     textDecorationLine:
-                                        task.status == true
+                                        task["status"] == true
                                             ? "line-through"
                                             : "none",
                                 }}

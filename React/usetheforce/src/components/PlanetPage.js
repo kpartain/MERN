@@ -15,10 +15,10 @@ const PlanetPage = (props) => {
     }, []); //query
     console.log(getPlanets);
     return (
-        <div key={index}>
-            {getPlanets.map((planet, index) => (
-                <div key={index}>
-                    {index}:<Link to={`/planets/${index}`}>{planet.name}</Link>
+        <div>
+            {getPlanets.map((planet, i) => (
+                <div key={i}>
+                    {i}:<Link to={`/planets/${i}`}>{planet.name}</Link>
                 </div>
             ))}
         </div>

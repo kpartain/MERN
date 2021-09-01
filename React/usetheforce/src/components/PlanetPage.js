@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const PlanetPage = (props) => {
@@ -14,10 +15,11 @@ const PlanetPage = (props) => {
     }, []); //query
     console.log(getPlanets);
     return (
-        <div>
-            <p>people</p>
+        <div key={index}>
             {getPlanets.map((planet, index) => (
-                <div key={index}>{planet.name}</div>
+                <div key={index}>
+                    {index}:<Link to={`/planets/${index}`}>{planet.name}</Link>
+                </div>
             ))}
         </div>
     );

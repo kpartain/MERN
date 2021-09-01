@@ -13,7 +13,7 @@ const ShowPage = (props) => {
             console.log("In use effect", response.data);
         });
     }, [endURL]);
-    const getReturnDisplay = (getData) => {
+    const getReturnDisplay = () => {
         console.log("First in func", getData);
         if (getData.height) {
             document.getElementById("appendHere").innerHTML = `
@@ -38,10 +38,9 @@ const ShowPage = (props) => {
         }
     };
     return (
-    <div onLoad={getReturnDisplay(getData)} id="appendHere">
-
-    </div>
-    );
+        <div onLoad={getReturnDisplay()} id="appendHere">
+            <h1>These aren't the droids you're looking for</h1>
+        </div>);
 };
 
 export default ShowPage;

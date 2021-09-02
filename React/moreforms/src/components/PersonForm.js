@@ -11,19 +11,10 @@ const PersonForm = (props) => {
     const [passwordERR, setPasswordERR] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [confirmPasswordERR, setConfirmPasswordERR] = useState("");
+    const [btnClass, setBtnClass] = useState("btn btn-secondary mb2")
     const createUser = (e) => {
         e.preventDefault();
-        if (
-            firstNameERR === "" &&
-            lastNameERR === "" &&
-            emailERR === "" &&
-            passwordERR === "" &&
-            confirmPasswordERR === "" &&
-            firstName !== "" &&
-            lastName !== "" &&
-            email !== "" &&
-            confirmPassword !== ""
-        ) {
+        if (hasAnyBlankFields() === false && hasAnyErrors() === false) {
             const newUser = {
                 "First Name": firstName,
                 "Last Name": lastName,
@@ -46,6 +37,8 @@ const PersonForm = (props) => {
             document.getElementById("submissionError").innerText =
                 "Submitted new user! Check Console for details";
         } else {
+            document.getElementById("submissionError").className =
+                "text-danger";
             document.getElementById("submissionError").innerText =
                 "Unable to submit - please review incomplete fields";
         }
@@ -72,15 +65,17 @@ const PersonForm = (props) => {
             case "confirmPasswordInput":
                 if (password !== e.target.value) {
                     setConfirmPasswordERR("Passwords must match");
+                    setConfirmPassword(e.target.value);
                     document.getElementById("confirmPasswordInput").className =
                         "form-control form-control-sm is-invalid";
                 }
                 if (password === e.target.value) {
                     setConfirmPasswordERR("");
+                    setConfirmPassword(e.target.value);
                     document.getElementById("confirmPasswordInput").className =
-                        "form-control form-control-sm is-valid";
+                        "form-control form-control-sm is-valid"; 
                 }
-                setConfirmPassword(e.target.value);
+                console.log("FINAL");
                 break;
             default:
                 break;
@@ -102,6 +97,35 @@ const PersonForm = (props) => {
         }
     };
 
+    const hasAnyErrors = () => {
+        if (
+            firstNameERR === "" &&
+            lastNameERR === "" &&
+            emailERR === "" &&
+            passwordERR === "" &&
+            confirmPasswordERR === ""
+        ) {
+            return false;
+        } else {
+            console.log(password)
+            console.log(confirmPassword)
+            return true;
+        }
+    };
+
+    const hasAnyBlankFields = () => {
+        if (
+            firstName !== "" &&
+            lastName !== "" &&
+            email !== "" &&
+            password !== "" &&
+            password === confirmPassword
+        ) {
+            return false;
+        } else {
+            return true;
+        }
+    };
     return (
         <form onSubmit={createUser} className="m-5">
             <div className="d-flex justify-content-between">
@@ -167,13 +191,14 @@ const PersonForm = (props) => {
                 </div>
             </div>
             <button
+                id="submissionButton"
                 type="submit"
-                className="btn btn-secondary mb-2"
+                className="btn btn-primary mb-2"
                 onClick={createUser}
             >
                 Submit User
             </button>
-            <p id="submissionError" className="text-danger"></p>
+            <p id="submissionError"></p>
         </form>
     );
 };

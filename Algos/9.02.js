@@ -68,7 +68,6 @@
     //everything is compared to this middle value
     let midIndex = Math.floor(nums.length/2);
     while(rightIndex >= midIndex && leftIndex <= midIndex){
-        debugger;
       //continue to increment left until we find a value greater than mid
       while(nums[leftIndex] < nums[midIndex]){
         leftIndex++;
@@ -88,13 +87,13 @@
   }
 module.exports = { partition };
 
-const nums1 = [11, 8, 14, 3, 6, 2, 7];
-console.log("1 BEFORE:\n", nums1);
-console.log("1 AFTER:\n", partition(nums1));
+// const nums1 = [11, 8, 14, 3, 6, 2, 7];
+// console.log("1 BEFORE:\n", nums1);
+// console.log("1 AFTER:\n", partition(nums1));
 
-// const nums2 = [11, 8, 14, 3, 3, 3, 6, 2, 7];
-// console.log("2 BEFORE:\n", nums2);
-// console.log("2 AFTER:\n", partition(nums2));
+const nums2 = [11, 8, 14, 3, 3, 3, 6, 2, 7];
+console.log("2 BEFORE:\n", nums2);
+console.log("2 AFTER:\n", partition(nums2));
 
 // const nums3 = [1, 17, 12, 3, 9, 13, 21, 4, 27];
 // console.log("3 BEFORE:\n", nums3);

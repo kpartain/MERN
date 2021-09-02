@@ -3,7 +3,7 @@ import PersonForm from "./components/PersonForm";
 
 function App() {
     return (
-        <div>
+        <div className="container">
             <PersonForm />
         </div>
     );

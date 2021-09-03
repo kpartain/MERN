@@ -1,10 +1,10 @@
 import "./App.css";
-import ToDoListForm from "./components/ToDoListForm";
+import SecondVersion from "./components/SecondVersion";
 
 function App() {
     return (
         <div>
-            <ToDoListForm />
+            <SecondVersion />
         </div>
     );
 }

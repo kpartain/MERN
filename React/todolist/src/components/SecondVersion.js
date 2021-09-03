@@ -34,7 +34,7 @@ const SecondVersion = (props) => {
 
     const toDoListElements = toDoList.map((eachTask, index) => {
         return (
-            <li key={index} id={index}>
+            <li key={index} id={index} className="inline-items">
                 <p className={eachTask.completed ? "line-through" : "none"}>
                     <input
                         type="checkbox"

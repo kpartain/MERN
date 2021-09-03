@@ -4,3 +4,8 @@
 .line-through {
     text-decoration: line-through;
 }
+.inline-items{
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}

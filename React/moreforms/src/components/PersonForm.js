@@ -11,7 +11,6 @@ const PersonForm = (props) => {
     const [passwordERR, setPasswordERR] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [confirmPasswordERR, setConfirmPasswordERR] = useState("");
-    const [btnClass, setBtnClass] = useState("btn btn-secondary mb2")
     const createUser = (e) => {
         e.preventDefault();
         if (hasAnyBlankFields() === false && hasAnyErrors() === false) {
@@ -59,6 +58,14 @@ const PersonForm = (props) => {
                 setEmailERR(lessThan(2, e.target.value, "emailInput"));
                 break;
             case "passwordInput":
+                setConfirmPassword("");
+                document.getElementById("confirmPasswordInput").className =
+                    "form-control form-control-sm";
+                if (e.target.value.length < 8) {
+                    document.getElementById(
+                        "confirmPasswordInput"
+                    ).disabled = true;
+                }
                 setPasswordERR(lessThan(8, e.target.value, "passwordInput"));
                 setPassword(e.target.value);
                 break;
@@ -73,7 +80,7 @@ const PersonForm = (props) => {
                     setConfirmPasswordERR("");
                     setConfirmPassword(e.target.value);
                     document.getElementById("confirmPasswordInput").className =
-                        "form-control form-control-sm is-valid"; 
+                        "form-control form-control-sm is-valid";
                 }
                 console.log("FINAL");
                 break;
@@ -107,8 +114,8 @@ const PersonForm = (props) => {
         ) {
             return false;
         } else {
-            console.log(password)
-            console.log(confirmPassword)
+            console.log(password);
+            console.log(confirmPassword);
             return true;
         }
     };
@@ -186,14 +193,22 @@ const PersonForm = (props) => {
                         type="text"
                         onChange={handleChange}
                         value={confirmPassword}
-                        disabled={password.length > 7 ? false : true}
+                        disabled={
+                            passwordERR.length > 0 || password.length < 7
+                                ? true
+                                : false
+                        }
                     />
                 </div>
             </div>
             <button
                 id="submissionButton"
                 type="submit"
-                className="btn btn-primary mb-2"
+                className={
+                    hasAnyBlankFields() || hasAnyErrors()
+                        ? "btn btn-secondary mb-2"
+                        : "btn btn-primary mb-2"
+                }
                 onClick={createUser}
             >
                 Submit User

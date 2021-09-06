@@ -5,8 +5,9 @@ export default (props) => {
             {props.products.map((product, idx) => {
                 return (
                     <p key={idx}>
-                        {product.title}, ${product.price}, $
-                        {product.description}
+                        {idx} <br></br>
+                        <a href={`/products/${product._id}`}>{product.title}</a>
+                        ${product.price},{product.description}
                     </p>
                 );
             })}

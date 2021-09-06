@@ -8,6 +8,7 @@ export default props => {
     }, [])
     return (
         <div>
+            <h1>DETAIL COMPONENT</h1>
             <p>Title: {product.title}</p>
             <p>Price: $ {product.price}</p>
             <p>Description: {product.description}</p>

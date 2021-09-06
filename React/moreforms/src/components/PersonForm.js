@@ -135,7 +135,7 @@ const PersonForm = (props) => {
     };
     return (
         <form onSubmit={createUser} className="m-5">
-            <div className="d-flex justify-content-between">
+            <div className="d-flex justify-content-between m-5">
                 <div>
                     <div className="d-flex gap-1">
                         <p>First Name</p>
@@ -206,8 +206,8 @@ const PersonForm = (props) => {
                 type="submit"
                 className={
                     hasAnyBlankFields() || hasAnyErrors()
-                        ? "btn btn-secondary mb-2"
-                        : "btn btn-primary mb-2"
+                        ? "btn btn-secondary mb-2 m-5"
+                        : "btn btn-primary mb-2 m-5"
                 }
                 onClick={createUser}
             >

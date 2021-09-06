@@ -14,9 +14,10 @@ const SecondVersion = (props) => {
     };
     const deleteFromList = (e) => {
         e.preventDefault();
-        let newList = [...toDoList];
+        // let newList = [...toDoList];
         var thisIndex = e.target.parentNode.id;
-        newList.splice(thisIndex, 1);
+        // newList.splice(thisIndex, 1);
+        let newList = toDoList.filter((todo, i) => thisIndex != i);
         setToDoList(newList);
     };
 
@@ -24,9 +25,9 @@ const SecondVersion = (props) => {
         let newList = [...toDoList];
         var thisIndex = e.target.parentNode.parentNode.id;
         var thisObject = newList[thisIndex];
-        if(thisObject.completed === true){
+        if (thisObject.completed === true) {
             thisObject.completed = false;
-        } else{
+        } else {
             thisObject.completed = true;
         }
         setToDoList(newList);

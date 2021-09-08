@@ -24,6 +24,9 @@ chrome-user-data
 .vscode
 *.swp
 *.swo
+# these hide secret keys v
+.env
+*.env
 
 packages/react-devtools-core/dist
 packages/react-devtools-extensions/chrome/build

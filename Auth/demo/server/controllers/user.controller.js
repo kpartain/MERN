@@ -1,5 +1,5 @@
 const { User } = require("../models/user.model");
-
+const bcrypt = require("bcrypt");
 //JSON WEB TOKEN
 // const jwt = require("jsonwebtoken");
 // const payload = {
@@ -52,9 +52,8 @@ module.exports.login = async (req, res) => {
         httpOnly: true,
     }).json({ msg: "success!" });
 };
-
 //LOG OUT
 module.exports.logout = (req, res) => {
     res.clearCookie('usertoken');
     res.sendStatus(200);
-}
+};

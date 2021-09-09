@@ -7,7 +7,7 @@ import LoginRegistration from '../components/LoginRegistration';
 
 const Main = () => {
   return (
-    <div>
+    <div className="container">
         <h1>MAIN PAGE</h1>
         <nav>
             <p><Link to = "/">[main page] Main Page</Link></p>

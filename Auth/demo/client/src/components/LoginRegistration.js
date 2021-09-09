@@ -1,131 +1,166 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { navigate } from "@reach/router";
+// import { navigate } from "@reach/router";
 
-const NewForm = (props) => {
-    const [newUser, setNewUser] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-    });
-    const [existingUser, setExistingUser] = useState({
-        email: "",
-        password: "",
-    });
-    const [errors, setErrors] = useState([]);
+const LoginRegistration = (props) => {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("")
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    // const [errors, setErrors] = useState([]);
 
     const onSubmitHandlerREGISTER = (e) => {
         e.preventDefault();
-        console.log(firstName, lastName, email, password, confirmPassword);
+        console.log("BEFORE SENDING:\n",{ 
+            firstName, 
+            lastName, 
+            email, 
+            password, 
+            confirmPassword
+        })
         axios
-            .post("http://localhost:8000/api/{COMPLETE THIS}", {
-                firstName: newUser.firstName,
-                lastName: newUser.lastName,
-                email: newUser.email,
-                password: newUser.password,
-                confirmPassword: newUser.confirmPassword,
-            })
-            .then((res) => alert("NEW USER REGISTERED - JUST DEMO ALERT"))
+            .post("http://localhost:8000/api/register", {
+                firstName: firstName, 
+                lastName: lastName, 
+                email: email, 
+                password: password, 
+                confirmPassword: confirmPassword,
+            }, {withCredentials: true})
+            .then((res) => console.log("REGISTER RESPONSE\n", res))
             .catch((err) => {
-                const errorResponse = err.response.data.errors;
-                const errorArr = [];
-                for (const key of Object.keys(errorResponse)) {
-                    errorArr.push(errorResponse[key].message);
-                }
-                setErrors(errorArr);
+                console.log(err)
+                // const errorResponse = err.response.data.errors;
+                // const errorArr = [];
+                // for (const key of Object.keys(errorResponse)) {
+                //     errorArr.push(errorResponse[key].message);
+                // }
+                // setErrors(errorArr);
             });
     };
 
     const onSubmitHandlerLOGIN = (e) => {
         e.preventDefault();
-        console.log(email, password);
+        console.log("BEFORE SENDING:\n",{
+            email, 
+            password});
         axios
-            .post("http://localhost:8000/api/{COMPLETE THIS}", {
-                email: newUser.email,
-                password: newUser.password,
-            })
-            .then((res) => alert("USER LOGGED IN - JUST DEMO ALERT"))
+            .post("http://localhost:8000/api/login", {
+                email, 
+                password}, {withCredentials: true})
+            .then((res) => console.log("LOGIN RESPONSE\n", res))
             .catch((err) => {
-                const errorResponse = err.response.data.errors;
-                const errorArr = [];
-                for (const key of Object.keys(errorResponse)) {
-                    errorArr.push(errorResponse[key].message);
-                }
-                setErrors(errorArr);
+                console.log(err)
+                console.log(err.data)
+                console.log(err.body)
+                // const errorResponse = err.response.data.errors;
+                // const errorArr = [];
+                // for (const key of Object.keys(errorResponse)) {
+                //     errorArr.push(errorResponse[key].message);
+                // }
+                // setErrors(errorArr);
             });
     };
     return (
-        <div>
-            <h1>REGISTER</h1>
-            <form onSubmit={onSubmitHandlerREGISTER}>
-                <div>
-                    {errors.map((err, index) => (
+        <div className="d-flex justify-content-between container gap-5">
+            <div className="border w-50 p-3">
+                <h1>REGISTER</h1>
+                <form>
+                    {/* {errors.map((err, index) => (
                         <p key={index}>{err}</p>
-                    ))}
-                </div>
-                <p>First Name</p>
-                <input
-                    type="text"
-                    onChange={(e) => setNewUser.firstName(e.target.value)}
-                    placeholder="..."
-                />
+                    ))} */}
+                    <div className="d-flex gap-2">
+                        <div className="w-50">
+                            <p>First Name</p>
+                            <p>Last Name</p>
+                            <p>Email</p>
+                            <p>Password</p>
+                            <p>Confirm Password</p>
+                        </div>
+                        <div className="w-50">
+                            <input
+                                type="text"
+                                onChange={(e) =>
+                                    setFirstName(e.target.value)
+                                }
+                                placeholder="..."
+                                className="w-100 mb-2"
+                            />
+                            <input
+                                type="text"
+                                onChange={(e) =>
+                                    setLastName(e.target.value)
+                                }
+                                placeholder="..."
+                                className="w-100 mb-2"
+                            />
+                            <input
+                                type="text"
+                                onChange={(e) =>
+                                    setEmail(e.target.value)
+                                }
+                                placeholder="..."
+                                className="w-100 mb-2"
+                            />
+                            <input
+                                type="text"
+                                onChange={(e) =>
+                                    setPassword(e.target.value)
+                                }
+                                placeholder="..."
+                                className="w-100 mb-2"
+                            />
+                            <input
+                                type="text"
+                                onChange={(e) =>
+                                    setConfirmPassword(e.target.value)
+                                }
+                                placeholder="..."
+                                className="w-100 mb-2"
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <button onClick={onSubmitHandlerREGISTER} className="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div className="border w-50 p-3">
+                <h1>LOGIN</h1>
+                {/* {errors.map((err, index) => (
+                    <p key={index}>{err}</p>
+                ))} */}
+                <form>
+                    <div className="d-flex gap-2">
+                        <div className="w-50">
+                            <p className="mb-2">Email</p>
+                            <p>Password</p>
+                        </div>
+                        <div className="w-50">
+                            <input
+                                type="text"
+                                onChange={(e) =>
+                                    setEmail(e.target.value)
+                                }
+                                placeholder="..."
+                                className="w-100 mb-2"
+                            />
+                            <input
+                                type="text"
+                                onChange={(e) =>
+                                    setPassword(e.target.value)
+                                }
+                                placeholder="..."
+                                className="w-100 mb-2"
+                            />
+                        </div>
+                    </div>
 
-                <p>Last Name</p>
-                <input
-                    type="text"
-                    onChange={(e) => setNewUser.lastName(e.target.value)}
-                    placeholder="..."
-                />
-
-                <p>Email</p>
-                <input
-                    type="text"
-                    onChange={(e) => setNewUser.email(e.target.value)}
-                    placeholder="..."
-                />
-
-                <p>Password</p>
-                <input
-                    type="text"
-                    onChange={(e) => setNewUser.password(e.target.value)}
-                    placeholder="..."
-                />
-
-                <p>Confirm Password</p>
-                <input
-                    type="text"
-                    onChange={(e) => setNewUser.confirmPassword(e.target.value)}
-                    placeholder="..."
-                />
-
-                <div>
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
-
-            <h1>LOGIN</h1>
-            {errors.map((err, index) => (
-                <p key={index}>{err}</p>
-            ))}
-            <form onSubmit={onSubmitHandlerLOGIN}>
-                <p>Email</p>
-                <input
-                    type="text"
-                    onChange={(e) => setExistingUser.email(e.target.value)}
-                    placeholder="..."
-                />
-
-                <p>Password</p>
-                <input
-                    type="text"
-                    onChange={(e) => setExistingUser.password(e.target.value)}
-                    placeholder="..."
-                />
-            </form>
+                    <button onClick={onSubmitHandlerLOGIN} type="submit" className="btn btn-primary">Submit</button>
+                </form>
+            </div>
         </div>
     );
 };
 
-export default NewForm;
+export default LoginRegistration;

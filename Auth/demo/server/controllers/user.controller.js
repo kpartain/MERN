@@ -1,33 +1,29 @@
 const { User } = require("../models/user.model");
 const bcrypt = require("bcrypt");
-//JSON WEB TOKEN
-// const jwt = require("jsonwebtoken");
-// const payload = {
-//     id: user._id
-//   };
-// const userToken = jwt.sign(payload, process.env.SECRET_KEY);
-
-//COOKIES AS RES
-// res.cookie("mycookie", "mydata", { httpOnly: true }).json({
-//     message: "This response has a cookie",
-// });
+const { response } = require("express");
+const jwt = require("jsonwebtoken");
+const secret = process.env.SECRET_KEY;
 
 //REGISTER/CREATE
 module.exports.register = (req, res) => {
     User.create(req.body)
-      .then(user => {
-          const userToken = jwt.sign({
-              id: user._id
-          }, process.env.SECRET_KEY);
-   
-          res
-              .cookie("usertoken", userToken, secret, {
-                  httpOnly: true
-              })
-              .json({ msg: "success!", user: user });
-      })
-      .catch(err => res.json(err));
-  }
+        .then((user) => {
+            const userToken = jwt.sign(
+                {
+                    id: user._id,
+                },
+                process.env.SECRET_KEY
+            );
+
+            res.cookie("usertoken", userToken, secret, {
+                httpOnly: true,
+            }).json({ msg: "success!", user: user });
+        })
+        .catch((err) => {
+            console.log("ERR FROM CONTROLLER", err);
+            res.status(400).json(err);
+        });
+};
 
 //LOG IN
 module.exports.login = async (req, res) => {
@@ -54,6 +50,13 @@ module.exports.login = async (req, res) => {
 };
 //LOG OUT
 module.exports.logout = (req, res) => {
-    res.clearCookie('usertoken');
+    res.clearCookie("usertoken");
     res.sendStatus(200);
+};
+
+//get all
+module.exports.getAll = (req, res) => {
+    User.find({})
+        .then((listOfUserObjects) => response.json(listOfUserObjects))
+        .catch((errorFound) => response.json(errorFound));
 };

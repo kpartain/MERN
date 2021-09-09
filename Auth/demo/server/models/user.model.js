@@ -31,26 +31,24 @@ const UserSchema = new mongoose.Schema(
 UserSchema.virtual("confirmPassword")
     .get(() => this._confirmPassword)
     .set((value) => (this._confirmPassword = value));
-
-// prior to saving, we need to hash the password.
-//this is after it has met all other validations, confirm password matches, etc.
-UserSchema.pre("save", function (next) {
-    bcrypt.hash(this.password, 10).then((hash) => {
-        this.password = hash;
-        console.log("Before saving, hashed PW", hash)
-        next();
-    });
-});
+    
 //we use the pre-hook to do this validation before persisting any informatiion
 UserSchema.pre("validate", function (next) {
     if (this.password !== this.confirmPassword) {
-        console.log("Inside validation user schema - PW not match")
         this.invalidate(
             "confirmPassword",
             "Password must match confirm password"
         );
     }
     next();
+});
+// prior to saving, we need to hash the password.
+//this is after it has met all other validations, confirm password matches, etc.
+UserSchema.pre("save", function (next) {
+    bcrypt.hash(this.password, 10).then((hash) => {
+        this.password = hash;
+        next();
+    });
 });
 
 module.exports.User = mongoose.model("User", UserSchema);

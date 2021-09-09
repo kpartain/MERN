@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-// import { navigate } from "@reach/router";
+import { navigate } from "@reach/router";
 
 const LoginForm = (props) => {
     const [email, setEmail] = useState("");
@@ -22,7 +22,11 @@ const LoginForm = (props) => {
                 },
                 { withCredentials: true }
             )
-            .then((res) => console.log("LOGIN RESPONSE\n", res))
+            .then((res) => {
+                console.log("LOGIN RESPONSE\n", res)
+                console.log("USER ID\n", res.data.userID)
+                navigate("/dashboard/"+res.data.userID);
+            })
             .catch((err) => {
                 console.log(err);
                 console.log(err.response);

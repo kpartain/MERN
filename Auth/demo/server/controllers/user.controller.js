@@ -1,6 +1,6 @@
 const { User } = require("../models/user.model");
 const bcrypt = require("bcrypt");
-const { response } = require("express");
+const { response, request } = require("express");
 const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET_KEY;
 
@@ -17,7 +17,7 @@ module.exports.register = (req, res) => {
 
             res.cookie("usertoken", userToken, secret, {
                 httpOnly: true,
-            }).json({ msg: "success!", user: user });
+            }).json({msg: "success!", userID: user._id });
         })
         .catch((err) => {
             console.log("ERR FROM CONTROLLER", err);
@@ -46,7 +46,7 @@ module.exports.login = async (req, res) => {
     );
     res.cookie("usertoken", userToken, secret, {
         httpOnly: true,
-    }).json({ msg: "success!" });
+    }).json({ msg: "success!", userID: user._id });
 };
 //LOG OUT
 module.exports.logout = (req, res) => {
@@ -57,6 +57,17 @@ module.exports.logout = (req, res) => {
 //get all
 module.exports.getAll = (req, res) => {
     User.find({})
-        .then((listOfUserObjects) => response.json(listOfUserObjects))
-        .catch((errorFound) => response.json(errorFound));
+        .then((listOfUserObjects) => res.json(listOfUserObjects))
+        .catch((errorFound) => res.json(errorFound));
 };
+
+//get by ID
+module.exports.getByID = (req, res) => {
+    User.findOne({_id: req.params.id})
+    .then((foundObject) => {
+        res.json(foundObject)
+        console.log("RES",res)
+        console.log("FOUND OBJ", foundObject)
+    })
+    .catch((errorFound) => res.json(errorFound));
+}

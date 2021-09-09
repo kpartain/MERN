@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-// import { navigate } from "@reach/router";
+import { navigate } from "@reach/router";
 
 const RegisterForm = (props) => {
     const [firstName, setFirstName] = useState("");
@@ -26,7 +26,10 @@ const RegisterForm = (props) => {
                     withCredentials: true,
                 }
             )
-            .then((res) => console.log("REGISTER RESPONSE\n", res))
+            .then((res) => {
+                console.log("REGISTER RESPONSE\n", res);
+                navigate("/dashboard");
+            })
             .catch((err) => {
                 console.log(err);
                 const errorResponse = err.response.data.errors;

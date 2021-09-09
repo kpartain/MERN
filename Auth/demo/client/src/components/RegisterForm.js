@@ -28,7 +28,8 @@ const RegisterForm = (props) => {
             )
             .then((res) => {
                 console.log("REGISTER RESPONSE\n", res);
-                navigate("/dashboard");
+                console.log("USER ID\n", res.data.userID);
+                navigate("/dashboard/" + res.data.userID);
             })
             .catch((err) => {
                 console.log(err);

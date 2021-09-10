@@ -1,42 +1,33 @@
-const Jokes = require("../models/joke.model");
-
-module.exports.findAllJokes = (req, res) => {
-    Jokes.find()
-        .then((allJokes) => res.json({ jokes: allJokes }))
-        .catch((err) =>
-            res.json({ message: "Something went wrong", error: err })
-        );
+const { Joke } = require("../models/joke.model");
+module.exports.create = (request, response) => {
+    const { setup, punchline } = request.body;
+    Joke.create({
+        setup,
+        punchline,
+    })
+        .then((newJokeObject) => response.json(newJokeObject))
+        .catch((errorFound) => response.status(400).json(errorFound));
 };
-
-module.exports.findOneSingleJoke = (req, res) => {
-    Jokes.findOne({ _id: req.params.id })
-        .then((oneJoke) => res.json({ joke: oneJoke }))
-        .catch((err) =>
-            res.json({ message: "Something went wrong", error: err })
-        );
+module.exports.getAll = (request, response) => {
+    Joke.find({})
+        .then((listOfJokeObjects) => response.json(listOfJokeObjects))
+        .catch((errorFound) => response.json(errorFound));
 };
-
-module.exports.createNewJoke = (req, res) => {
-    console.log(req.body);
-    Jokes.create(req.body)
-        .then((newJoke) => res.json({ joke: newJoke }))
-        .catch((err) =>
-            res.json({ message: "Something went wrong", error: err })
-        );
+module.exports.getByID = (request, response) => {
+    Joke.findOne({ _id: request.params.id })
+        .then((foundJokeObject) => response.json(foundJokeObject))
+        .catch((errorFound) => response.json(errorFound));
 };
-
-module.exports.updateExistingJoke = (req, res) => {
-    Jokes.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
-        .then((updatedJoke) => res.json({ joke: updatedJoke }))
-        .catch((err) =>
-            res.json({ message: "Something went wrong", error: err })
-        );
+module.exports.updateByID = (request, response) => {
+    Joke.findOneAndUpdate({ _id: request.params.id }, request.body, {
+        new: true,
+        runValidators: true,
+    })
+        .then((jokeBeingUpdated) => response.json(jokeBeingUpdated))
+        .catch((errorFound) => response.status(400).json(errorFound));
 };
-
-module.exports.deleteAnExistingJoke = (req, res) => {
-    Jokes.deleteOne({ _id: req.params.id })
-        .then((result) => res.json({ result: result }))
-        .catch((err) =>
-            res.json({ message: "Something went wrong", error: err })
-        );
+module.exports.deleteByID = (request, response) => {
+    Joke.deleteOne({ _id: request.params.id })
+        .then((deletionSuccessMessage) => response.json(deletionSuccessMessage))
+        .catch((errorInDeletion) => response.json(errorInDeletion));
 };

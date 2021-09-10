@@ -4,20 +4,16 @@ const JokeSchema = new mongoose.Schema(
     {
         setup: {
             type: String,
-            required: [true, "Can't have a joke without a setup..."],
-            minlength: [10, "Joke setup must be at least 10 characters"],
+            required: [true, "This doesn't seem like it'll be that funny."],
+            minlength: [10, "I've always looked down upon short jokes"],
         },
         punchline: {
             type: String,
-            required: [true, "A joke isn't funny without a punchline..."],
-            minlength: [3, "Joke punchline must be at least 3 charaters"],
+            required: [true, "I don't get it."],
+            minlength: [3, "You're going to have to punch harder than that."],
         },
     },
-    {
-        timestamps: true,
-    }
+    {timestamps: true}
 );
 
-const Joke = mongoose.model('Joke', JokeSchema);
-
-module.exports = Joke;
+module.exports.Joke = mongoose.model('Joke', JokeSchema);

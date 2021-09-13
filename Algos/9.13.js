@@ -78,8 +78,8 @@ function insert(tableName, columnValuePairs) {
     var columnString = "";
     var valueString = "";
     for (let [key, value] of Object.entries(columnValuePairs)) {
-        columnString += "'" + key + "'" + ", "; //pop the last 2 for erroneous space and comma
-        valueString += "'" + value + "'" + ", "; //pop the last 2 for erroneous space and comma
+        columnString +=  key + ", "; //pop the last 2 for erroneous space and comma
+        valueString += (typeOf(value) === "string" ? ("'" + value + "'" + ", ") : ( value + ", ")); //pop the last 2 for erroneous space and comma
     }
     var returnString =
         startString +
@@ -92,7 +92,7 @@ function insert(tableName, columnValuePairs) {
 
 const table = "users";
 const insertData1 = { first_name: "John", last_name: "Doe" };
-// console.log(insert(table, insertData1));
+console.log(insert(table, insertData1));
 const expected1 =
     "INSERT INTO users (first_name, last_name) VALUES ('John', 'Doe');";
 
@@ -103,7 +103,7 @@ const insertData2 = {
     age: 30,
     is_admin: false,
 };
-// console.log(insert(table, insertData2));
+console.log(insert(table, insertData2));
 const expected2 =
     "INSERT INTO users (first_name, last_name, age, is_admin) VALUES ('John', 'Doe', 30, false);";
 // Explanation: no quotes around the int or the bool, technically in SQL the bool would become a 0 or 1, but don't worry about that here.

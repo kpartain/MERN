@@ -6,14 +6,12 @@ const NewForm = (props) => {
     const [name, setName] = useState("");
     const [position, setPosition] = useState("");
     const [errors, setErrors] = useState([]);
-
     const onSubmitHandler = (e) => {
         e.preventDefault();
         if(validateFormBeforeSubmission()){
             processPOSTRequest();
         };
     };
-
     const validateFormBeforeSubmission = () => {
         const frontEndErrors = []
         if(name.trim() == "" || name.length < 2) {
@@ -26,13 +24,9 @@ const NewForm = (props) => {
             return true;
         }
     }
-
     const processPOSTRequest = () => {
         axios
-        .post("http://localhost:8000/api/team", {
-            name,
-            position,
-        })
+        .post("http://localhost:8000/api/team", {name,position})
         .then((res) => navigate("/players/list"))
         .catch((err) => {
             const errorResponse = err.response.data.errors;
@@ -52,9 +46,7 @@ const NewForm = (props) => {
             <form onSubmit={onSubmitHandler} className="border border-dark p-3">
                 <h2>Add Player</h2>
                 <div>
-                    {errors.map((err, index) => (
-                        <p key={index}>{err}</p>
-                    ))}
+                    {errors.map((err, index) => ( <p key={index}>{err}</p> ))}
                 </div>
                 <div className="d-flex gap-3">
                     <div className="w-50">
@@ -62,19 +54,10 @@ const NewForm = (props) => {
                         <p>Preferred Position</p>
                     </div>
                     <div className="d-flex flex-column gap-2 w-50">
-                            <input
-                                type="text"
-                                onChange={(e) => setName(e.target.value)}
-                                placeholder="John Doe"
-                            />
-                            <input
-                                type="text"
-                                onChange={(e) => setPosition(e.target.value)}
-                                placeholder="position, if one is preferred"
-                            />
+                            <input type="text" onChange={(e) => setName(e.target.value)} placeholder="John Doe" />
+                            <input type="text" onChange={(e) => setPosition(e.target.value)} placeholder="position, if one is preferred" />
                     </div>
                 </div>
-
                 <div>
                     <button className="btn btn-success" type="submit" disabled={name.length < 2 ? true : false}>Submit</button>
                 </div>
@@ -82,5 +65,4 @@ const NewForm = (props) => {
         </div>
     );
 };
-
 export default NewForm;

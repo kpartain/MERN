@@ -13,7 +13,6 @@ const DeleteButton = props => {
       alert("Deletion was not processed.")
     }
   }
-
   const deleteRequest = () => {
     axios.delete("http://localhost:8000/api/teams/" + teamID)
       .then(res => deletionResponse(teamID));
@@ -22,5 +21,4 @@ const DeleteButton = props => {
     <button onClick = { deleteTeam } className="btn btn-danger">Delete</button>
   )
 }
-
 export default DeleteButton;

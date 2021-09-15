@@ -11,7 +11,7 @@ const Main = () => {
   return (
     <div>
         <nav>
-            <p><Link to = "/players/list">Manage Players</Link> | <Link to = "/status/game/:id"> Manage Player Status</Link></p>
+            <p><Link to = "/players/list">Manage Players</Link> | <Link to = "/players/addplayer">Add Player</Link> | <Link to = "/status/game/1">Game 1</Link> | <Link to = "/status/game/2">Game 2</Link>  | <Link to = "/status/game/3">Game 3</Link></p>
         </nav>
         
       <Router>

@@ -28,6 +28,7 @@ const ListOfObjects =(props) => {
                         <th>Player Name</th>
                         <th>Preferred Position</th>
                         <th>Actions</th>
+                        <th>(0 = no, 1 = yes, 2 = undecided)</th>
                     </tr>
                     {teams.map((thing, index) => (
                         <tr key={index}>
@@ -54,6 +55,11 @@ const ListOfObjects =(props) => {
                                         removeFromDOM(thing._id)
                                     }
                                 />
+                            </td>
+                            <td>
+                                Game 1: {thing.schedule[1]},
+                                Game 2: {thing.schedule[2]},
+                                Game 3: {thing.schedule[3]}
                             </td>
                         </tr>
                     ))}

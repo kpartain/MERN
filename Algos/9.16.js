@@ -1,7 +1,7 @@
 function getMaxServings(recipe, available) {
     //variable to store the minimum value, start at Number.MAX_SAFE_INTEGER;
     var numServingsPossible = Number.MAX_SAFE_INTEGER
-    //iterate through KVPs of available
+    //iterate through KVPs of recipe
     for(const [rKey, rValue] of Object.entries(recipe)) {
       //store a value for the division of available/recipes FLOOR
       let numberOfServingsForThisKey = 0;

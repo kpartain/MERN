@@ -73,7 +73,6 @@ const expectedresult3 = [-1, -1]; // not found.
     //compare s1 iteration to see if s2 contains it
     for(var i=0; i < sOne.length; i++) {
         var matchedIndex = sTwo.indexOf(sOne[i]);
-        console.log(matchedIndex, sOne[i]);
         if(matchedIndex === -1){
             return false;
         } else {
@@ -82,7 +81,6 @@ const expectedresult3 = [-1, -1]; // not found.
     }
     return true;
 }
-
 
 const strA1 = "Hello World";
 const strB1 = "lloeh wordl";
